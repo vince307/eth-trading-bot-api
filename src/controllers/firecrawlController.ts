@@ -238,7 +238,6 @@ export const fetchTechnicalAnalysis = async (req: Request, res: Response) => {
 			scrapedData.markdown || "",
 			targetUrl,
 		);
-		// console.log("parsedData", parsedData);
 
 		let savedToDb = false;
 		if (!parsedData) {

@@ -201,22 +201,22 @@ export class TechnicalAnalysisParser {
 			movingAverages: 'Neutral'
 		};
 
-		// Look for summary sections
-		const summaryMatch = markdown.match(/## Summary:(\w+)/i);
+		// Look for overall summary: "## Summary:Strong Sell"
+		const summaryMatch = markdown.match(/## Summary:\s*((?:Strong\s+)?(?:Sell|Buy|Neutral))/i);
 		if (summaryMatch) {
-			summary.overall = summaryMatch[1];
+			summary.overall = summaryMatch[1].trim();
 		}
 
-		// Look for technical indicators summary
-		const techIndicatorsMatch = markdown.match(/Technical Indicators.*?(\w+)\s+Buy:\s*\((\d+)\)\s+Sell:\s*\((\d+)\)/is);
+		// Look for technical indicators summary: "Summary:Strong SellBuy:0Neutral:1Sell:9"
+		const techIndicatorsMatch = markdown.match(/Technical Indicators[^#]*?Summary:\s*((?:Strong\s+)?(?:Sell|Buy|Neutral))\s*Buy:\s*(\d+)/is);
 		if (techIndicatorsMatch) {
-			summary.technicalIndicators = techIndicatorsMatch[1];
+			summary.technicalIndicators = techIndicatorsMatch[1].trim();
 		}
 
-		// Look for moving averages summary
-		const movingAvgMatch = markdown.match(/Moving Averages.*?(\w+)\s+Buy:\s*\((\d+)\)\s+Sell:\s*\((\d+)\)/is);
+		// Look for moving averages summary: "Summary:Strong SellBuy:0Sell:12"
+		const movingAvgMatch = markdown.match(/Moving Averages[^#]*?Summary:\s*((?:Strong\s+)?(?:Sell|Buy|Neutral))\s*Buy:\s*(\d+)/is);
 		if (movingAvgMatch) {
-			summary.movingAverages = movingAvgMatch[1];
+			summary.movingAverages = movingAvgMatch[1].trim();
 		}
 
 		return summary;
